@@ -1,0 +1,187 @@
+<div class="products-wrapper">
+  <!-- Banner Section -->
+  <section class="products-banner">
+    <div class="banner-content">
+      <div class="banner-badge">{{ 'LIMITED_TIME' | translate }}</div>
+      <h1>{{ 'NEW_COLLECTION' | translate }}</h1>
+      <p>{{ 'ELEVATE_YOUR_STYLE' | translate }}</p>
+      <app-button variant="outline" (onClick)="productService.clearFilters()">
+        {{ 'DISCOVER_NOW' | translate }}
+      </app-button>
+    </div>
+  </section>
+
+  <div class="product-page">
+    <!-- Desktop Sidebar Filters -->
+    <aside class="sidebar-filters desktop-only">
+      <ng-container [ngTemplateOutlet]="filtersTpl"></ng-container>
+    </aside>
+
+    <ng-template #filtersTpl>
+      <div class="filter-container">
+        <div class="filter-header desktop-only">
+          <h3>{{ 'FILTERS' | translate }}</h3>
+          <button class="clear-btn" (click)="clearDraftFilters()" aria-label="Clear all filters">
+            {{ 'CLEAR_FILTERS' | translate }}
+          </button>
+        </div>
+
+        <!-- Category -->
+        <div class="filter-group category-group">
+          <label>{{ 'CATEGORY' | translate }}</label>
+          <div class="category-list">
+            <button (click)="selectCategory(null)" [class.active]="draftCategory() === null">
+              {{ 'ALL' | translate }}
+            </button>
+
+            @if (productService.categoriesResource.status() === 'resolved') {
+              @for (cat of productService.categoriesResource.value(); track cat) {
+                <button (click)="selectCategory(cat)" [class.active]="draftCategory() === cat">
+                  {{ cat | uppercase }}
+                </button>
+              }
+            }
+          </div>
+        </div>
+
+        <!-- Price Range -->
+        <div class="filter-group">
+          <label>{{ 'PRICE_RANGE' | translate }}</label>
+          <div class="price-labels">
+            <span class="price-val">{{ draftMinPrice() | currency }}</span>
+            <span class="price-val">{{ draftMaxPrice() | currency }}</span>
+          </div>
+          <app-slider
+            [min]="minBound()"
+            [max]="maxBound()"
+            [step]="1"
+            [(valueMin)]="draftMinPrice"
+            [(valueMax)]="draftMaxPrice"
+          />
+        </div>
+        <!-- Desktop Apply Button (always visible in sidebar) -->
+        <div class="filter-actions desktop-only">
+          <app-button variant="primary" class="w-full" (onClick)="applyFilters()">
+            {{ 'APPLY_FILTERS' | translate }}
+          </app-button>
+        </div>
+      </div>
+    </ng-template>
+
+    <!-- Product Content Display -->
+    <main class="product-content">
+      <!-- Search bar — always at the top, instant apply -->
+      <div class="search-bar-wrapper">
+        <ng-template #searchIcon>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            style="width: 18px; height: 18px"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </ng-template>
+        <app-input
+          [placeholder]="'SEARCH' | translate"
+          [value]="productService.searchQuery()"
+          (valueChange)="onSearchChange($event)"
+          [icon]="searchIcon"
+        />
+      </div>
+
+      <div class="product-grid">
+        @if (productService.productsResource.isLoading()) {
+          @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
+            <div class="product-card skeleton-card">
+              <div class="skeleton-img"></div>
+              <div class="info">
+                <div class="skeleton-title" style="width: 90%"></div>
+                <div class="skeleton-title" style="width: 60%; margin-top: 8px"></div>
+                <div class="skeleton-price" style="width: 30%; margin-top: 15px"></div>
+              </div>
+            </div>
+          }
+        } @else if (productService.productsResource.error()) {
+          <div class="error-state">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <p>{{ 'ERROR_SOMETHING_WENT_WRONG' | translate }}</p>
+            <app-button variant="primary" (onClick)="productService.productsResource.reload()">
+              {{ 'RETRY' | translate }}
+            </app-button>
+          </div>
+        } @else if (productService.productsResource.status() === 'resolved') {
+          @for (product of productService.allProducts(); track product.id) {
+            <a
+              class="product-card clickable"
+              [routerLink]="['/products', product.id]"
+            >
+              <div class="image-wrapper">
+                <img [ngSrc]="product.image" [alt]="product.title" fill style="object-fit: contain" />
+              </div>
+              <div class="info">
+                <h3>{{ product.title }}</h3>
+                <p class="category">{{ product.category }}</p>
+                <p class="price">{{ product.price | currency }}</p>
+              </div>
+            </a>
+          } @empty {
+            <div class="empty-state">
+              <div class="empty-icon-container">
+                <div class="icon-circle">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <path d="M11 8v2"></path>
+                    <path d="M11 13h.01"></path>
+                  </svg>
+                </div>
+                <div class="icon-decor"></div>
+              </div>
+              <div class="empty-text">
+                <h3>{{ 'NO_PRODUCTS_FOUND' | translate }}</h3>
+                <p>{{ 'TRY_ADJUSTING_FILTERS' | translate }}</p>
+              </div>
+              <app-button variant="outline" (onClick)="clearDraftFilters()">
+                {{ 'CLEAR_FILTERS' | translate }}
+              </app-button>
+            </div>
+          }
+        }
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile Sheet Filters (Moved outside grid) -->
+  <app-sheet
+    [isOpen]="productService.isMobileFilterOpen()"
+    (close)="productService.closeMobileFilter()"
+    side="right"
+    [closeOnDesktop]="true"
+    customClass="mobile-filter-sheet"
+  >
+    <h2 sheetHeader>{{ 'FILTERS' | translate }}</h2>
+    <ng-container [ngTemplateOutlet]="filtersTpl"></ng-container>
+
+    <div sheetFooter class="sheet-filter-actions">
+      <app-button variant="primary" class="w-full" (onClick)="applyFilters()">
+        {{ 'APPLY_FILTERS' | translate }}
+      </app-button>
+    </div>
+  </app-sheet>
+</div>

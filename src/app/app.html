@@ -1,0 +1,15 @@
+<app-global-loader />
+<app-header />
+<app-toast />
+
+<!-- Root-level overlays — rendered here so they escape all stacking contexts -->
+@if (navService.isMobileMenuOpen()) {
+  <div class="mobile-root-overlay" (click)="navService.closeMobileMenu()"></div>
+}
+@if (productService.isMobileFilterOpen()) {
+  <div class="mobile-root-overlay" (click)="productService.closeMobileFilter()"></div>
+}
+
+<main>
+  <router-outlet />
+</main>

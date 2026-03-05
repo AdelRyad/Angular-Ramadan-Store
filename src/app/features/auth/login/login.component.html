@@ -1,0 +1,34 @@
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <div class="login-illustration">
+      <img ngSrc="account-login.svg" alt="Login Illustration" width="180" height="180" priority />
+    </div>
+    <h2>{{ 'WELCOME_BACK' | translate }}</h2>
+    <p class="subtitle">{{ 'LOGIN_SUBTITLE' | translate }}</p>
+
+    @if (errorMessage()) {
+      <div class="error-box">{{ errorMessage()! | translate }}</div>
+    }
+
+    <div class="form-group">
+      <app-input
+        id="username"
+        formControlName="username"
+        type="text"
+        [placeholder]="'USERNAME' | translate"
+      ></app-input>
+    </div>
+    <div class="form-group">
+      <app-input
+        id="password"
+        formControlName="password"
+        type="password"
+        [placeholder]="'PASSWORD' | translate"
+      ></app-input>
+    </div>
+
+    <app-button type="submit" [disabled]="loginForm.invalid" class="w-full" customClass="w-full">
+      {{ 'LOGIN' | translate }}
+    </app-button>
+  </form>
+</div>

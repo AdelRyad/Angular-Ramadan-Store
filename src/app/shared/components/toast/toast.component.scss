@@ -1,0 +1,142 @@
+.toast-container {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
+
+  &.closing .toast {
+    animation: slideUpFadeOut 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .toast {
+    background: #ffffff;
+    color: #4a4036;
+    border-radius: 8px;
+    border: 1px solid rgba(74, 64, 54, 0.1);
+    box-shadow: 0 4px 12px rgba(74, 64, 54, 0.05);
+    animation: slideDownFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    pointer-events: auto;
+    overflow: hidden;
+    position: relative;
+    width: max-content;
+    min-width: 300px;
+    max-width: 420px;
+
+    .toast-content {
+      display: flex;
+      align-items: flex-start;
+      padding: 1rem 1.2rem;
+      gap: 1rem;
+    }
+
+    .toast-icon {
+      flex-shrink: 0;
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+
+    .toast-text {
+      flex: 1;
+      .title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin: 0 0 0.2rem 0;
+        color: #4a4036;
+      }
+      .desc {
+        font-size: 0.85rem;
+        margin: 0;
+        color: rgba(74, 64, 54, 0.6);
+        line-height: 1.4;
+      }
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      padding: 0;
+      color: rgba(74, 64, 54, 0.4);
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: color 0.2s;
+
+      &:hover {
+        color: #4a4036;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
+    // Dynamic state colors mapped to the left Icon
+    &.success .toast-icon {
+      color: #10b981;
+    }
+    &.error .toast-icon {
+      color: #ef4444;
+    }
+    &.info .toast-icon {
+      color: #6b5e54;
+    }
+
+    .progress-bar {
+      position: absolute;
+      bottom: 0;
+      inset-inline-start: 0;
+      height: 3px;
+      background: rgba(74, 64, 54, 0.1);
+      width: 100%;
+      animation: progress linear forwards;
+    }
+
+    &.success .progress-bar {
+      background: rgba(16, 185, 129, 0.5);
+    }
+    &.error .progress-bar {
+      background: rgba(239, 68, 68, 0.5);
+    }
+    &.info .progress-bar {
+      background: rgba(107, 94, 84, 0.5);
+    }
+  }
+}
+
+@keyframes slideDownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpFadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes progress {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}

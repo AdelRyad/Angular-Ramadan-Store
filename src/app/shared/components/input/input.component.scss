@@ -1,0 +1,83 @@
+.input-container {
+  width: 100%;
+  position: relative;
+
+  .input-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+  }
+
+  .base-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background: #fff;
+    border: 1px solid rgba(74, 64, 54, 0.1);
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #4a4036;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    box-sizing: border-box;
+
+    &::placeholder {
+      color: rgba(74, 64, 54, 0.4);
+    }
+
+    &:hover:not(:disabled) {
+      border-color: #4a4036;
+      background: #fdfdfd;
+    }
+
+    &:focus {
+      border-color: #4a4036;
+      box-shadow: 0 0 0 4px rgba(74, 64, 54, 0.1);
+      background: #fff;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f9fafb;
+    }
+  }
+
+  .custom-textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+    font-family: inherit;
+  }
+
+  &.has-icon {
+    .base-input {
+      padding-inline-start: 2.8rem;
+    }
+  }
+
+  .input-icon {
+    position: absolute;
+    inset-inline-start: 1rem;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(74, 64, 54, 0.4);
+    z-index: 2;
+    pointer-events: none;
+
+    ::ng-deep svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &.disabled {
+    .input-icon {
+      opacity: 0.5;
+    }
+  }
+}

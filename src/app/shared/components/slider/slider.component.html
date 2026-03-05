@@ -1,0 +1,23 @@
+<div class="slider-wrapper">
+  <div class="slider-track" #track></div>
+  <input
+    type="range"
+    [min]="min()"
+    [max]="max()"
+    [step]="step()"
+    [(ngModel)]="valueMin"
+    (input)="onMinChange($event)"
+    class="slider-input min-input"
+    [style.zIndex]="getZIndex('min')"
+  />
+  <input
+    type="range"
+    [min]="min()"
+    [max]="max()"
+    [step]="step()"
+    [(ngModel)]="valueMax"
+    (input)="onMaxChange($event)"
+    class="slider-input max-input"
+    [style.zIndex]="getZIndex('max')"
+  />
+</div>

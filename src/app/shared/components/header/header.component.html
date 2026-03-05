@@ -1,0 +1,131 @@
+<header class="ramadan-header">
+  <div class="header-content">
+    <div class="left-section">
+      <!-- Mobile Hamburger Button -->
+      <button class="mobile-menu-btn" (click)="navService.toggleMobileMenu()" aria-label="Menu">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" y1="12" x2="21" y2="12"></line>
+          <line x1="3" y1="6" x2="21" y2="6"></line>
+          <line x1="3" y1="18" x2="21" y2="18"></line>
+        </svg>
+      </button>
+
+      <a routerLink="/" class="brand">
+        <h1>{{ 'RAMADAN_KAREEM' | translate }}</h1>
+      </a>
+    </div>
+
+    <!-- Desktop Nav Links (Centered) -->
+    <nav class="desktop-nav">
+      @if (authService.isAuthenticated()) {
+        <div class="nav-links">
+          <a routerLink="/products" routerLinkActive="active">{{ 'PRODUCTS' | translate }}</a>
+          @if (authService.userRole() === 'admin') {
+            <a routerLink="/admin" routerLinkActive="active">{{ 'ADMIN' | translate }}</a>
+          }
+        </div>
+      }
+    </nav>
+
+    <div class="right-section">
+      <!-- Mobile Filter Button -->
+      @if (showFilterButton()) {
+        <button
+          class="mobile-filter-btn"
+          aria-label="Filters"
+          (click)="productService.toggleMobileFilter()"
+        >
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="4" y1="21" x2="4" y2="14"></line>
+            <line x1="4" y1="10" x2="4" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12" y2="3"></line>
+            <line x1="20" y1="21" x2="20" y2="16"></line>
+            <line x1="20" y1="12" x2="20" y2="3"></line>
+            <line x1="1" y1="14" x2="7" y2="14"></line>
+            <line x1="9" y1="8" x2="15" y2="8"></line>
+            <line x1="17" y1="16" x2="23" y2="16"></line>
+          </svg>
+        </button>
+      }
+
+      <div class="actions">
+        <app-button variant="outline" (onClick)="toggleLanguage()">
+          {{ langService.currentLang() === 'en' ? 'AR' : 'EN' }}
+        </app-button>
+
+        @if (authService.isAuthenticated()) {
+          <app-button variant="primary" (onClick)="authService.logout()">
+            {{ 'LOGOUT' | translate }}
+          </app-button>
+        }
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Side Modal (using unified Sheet component) -->
+<app-sheet
+  [isOpen]="navService.isMobileMenuOpen()"
+  (close)="navService.closeMobileMenu()"
+  side="left"
+  [closeOnDesktop]="true"
+>
+  <h2 sheetHeader>{{ 'MENU' | translate }}</h2>
+
+  <div class="sheet-nav-content">
+    @if (authService.isAuthenticated()) {
+      <a
+        routerLink="/products"
+        routerLinkActive="active"
+        (click)="navService.closeMobileMenu()"
+        class="nav-item"
+      >
+        {{ 'PRODUCTS' | translate }}
+      </a>
+      @if (authService.userRole() === 'admin') {
+        <a
+          routerLink="/admin"
+          routerLinkActive="active"
+          (click)="navService.closeMobileMenu()"
+          class="nav-item"
+        >
+          {{ 'ADMIN' | translate }}
+        </a>
+      }
+    }
+  </div>
+
+  <div class="sheet-actions-footer" sheetFooter>
+    <app-button
+      variant="outline"
+      class="w-full"
+      (onClick)="toggleLanguage(); navService.closeMobileMenu()"
+    >
+      {{ langService.currentLang() === 'en' ? 'AR' : 'EN' }}
+    </app-button>
+    @if (authService.isAuthenticated()) {
+      <app-button
+        variant="primary"
+        class="w-full"
+        (onClick)="authService.logout(); navService.closeMobileMenu()"
+      >
+        {{ 'LOGOUT' | translate }}
+      </app-button>
+    }
+  </div>
+</app-sheet>

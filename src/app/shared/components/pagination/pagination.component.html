@@ -1,0 +1,71 @@
+<div class="pagination-container" [class.is-rtl]="langService.currentLang() === 'ar'">
+  <div class="pagination-info">
+    <span class="results-text">
+      {{ 'RESULTS' | translate }}: {{ startRange() }} - {{ endRange() }} {{ 'OF' | translate }}
+      {{ totalItems() }}
+    </span>
+    <div class="page-size-selector">
+      <app-select
+        [options]="pageSizeSelectOptions()"
+        [value]="pageSize()"
+        (valueChange)="onSizeChange($event)"
+        customClass="pagination-select"
+      />
+    </div>
+  </div>
+
+  <div class="pagination-controls">
+    <button
+      class="page-btn arrow-btn prev-btn"
+      [disabled]="currentPage() === 1"
+      (click)="onPageChange(currentPage() - 1)"
+      aria-label="Previous Page"
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    @for (page of pages(); track $index) {
+      @if (page !== -1) {
+        <button
+          class="page-btn"
+          [class.active]="page === internalPage()"
+          (click)="onPageChange(page)"
+          [attr.aria-current]="page === internalPage() ? 'page' : null"
+        >
+          {{ page }}
+        </button>
+      } @else {
+        <span class="ellipsis" aria-hidden="true">...</span>
+      }
+    }
+
+    <button
+      class="page-btn arrow-btn next-btn"
+      [disabled]="currentPage() === totalPages()"
+      (click)="onPageChange(currentPage() + 1)"
+      aria-label="Next Page"
+    >
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+  </div>
+</div>

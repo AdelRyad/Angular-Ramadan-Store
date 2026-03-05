@@ -1,0 +1,43 @@
+.global-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background: var(--bg-primary, #ffffff);
+
+  .loader {
+    color: #4a4036;
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+}
+
+.mobile-root-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(74, 64, 54, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  animation: fadeIn 0.25s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}

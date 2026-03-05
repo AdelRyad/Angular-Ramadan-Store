@@ -1,0 +1,54 @@
+@use 'styles/theme' as *;
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-en: 'Outfit', sans-serif;
+  --font-ar: 'IBM Plex Sans Arabic', sans-serif;
+  --font-primary: var(--font-en);
+}
+
+[dir='rtl'],
+:lang(ar) {
+  --font-primary: var(--font-ar);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-primary);
+  background: $ramadan-primary;
+  color: $ramadan-text-dark;
+  letter-spacing: -0.01em; // Subtle luxury touch
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+
+  &[dir='ltr'] {
+    letter-spacing: -0.02em; // Slightly tighter for Outfit
+  }
+}
+body.no-scroll {
+  overflow: hidden;
+}
+
+// Re-usable scrollbar styling for elegance
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(74, 64, 54, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(74, 64, 54, 0.3);
+}

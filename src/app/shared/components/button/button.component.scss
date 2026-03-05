@@ -1,0 +1,115 @@
+:host {
+  display: inline-block;
+  &.w-full {
+    display: block;
+    width: 100%;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.4rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid transparent;
+  width: auto;
+  white-space: nowrap;
+  font-family: inherit;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.btn-primary {
+    background: #4a4036;
+    color: #fff;
+    &:hover:not(:disabled) {
+      background: #6b5e54;
+      box-shadow: 0 4px 12px rgba(74, 64, 54, 0.1);
+    }
+  }
+
+  &.btn-outline {
+    background: transparent;
+    border-color: rgba(74, 64, 54, 0.1);
+    color: #4a4036;
+    &:hover:not(:disabled) {
+      background: #f8f8f9;
+      border-color: #4a4036;
+    }
+  }
+
+  &.btn-destructive {
+    background: #fee2e2;
+    color: #dc2626;
+    border-color: #fecaca;
+    &:hover:not(:disabled) {
+      background: #fecaca;
+    }
+  }
+
+  &.btn-secondary {
+    background: rgba(74, 64, 54, 0.05);
+    color: #4a4036;
+    border-color: rgba(74, 64, 54, 0.1);
+    &:hover:not(:disabled) {
+      background: rgba(74, 64, 54, 0.1);
+    }
+  }
+
+  &.btn-ghost {
+    background: transparent;
+    color: rgba(74, 64, 54, 0.6);
+    &:hover:not(:disabled) {
+      background: rgba(74, 64, 54, 0.05);
+      color: #4a4036;
+    }
+  }
+
+  &.w-full {
+    width: 100%;
+  }
+
+  .btn-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+
+    &.invisible {
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+
+  .loader {
+    position: absolute;
+    inset: 0 auto;
+    margin: auto;
+    // ...
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    animation: rotation 1s linear infinite;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

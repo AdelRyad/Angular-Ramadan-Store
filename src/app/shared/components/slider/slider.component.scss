@@ -1,0 +1,91 @@
+.slider-wrapper {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: rgba(74, 64, 54, 0.05);
+  border-radius: 10px;
+  margin: 1.5rem 0;
+}
+
+.slider-track {
+  position: absolute;
+  height: 100%;
+  background: #4a4036;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.slider-input {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  box-sizing: border-box;
+
+  &::-webkit-slider-runnable-track {
+    background: none;
+    border: none;
+  }
+
+  &::-moz-range-track {
+    background: none;
+    border: none;
+  }
+
+  &::-webkit-slider-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #4a4036;
+    cursor: pointer;
+    pointer-events: auto;
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: 0 2px 6px rgba(74, 64, 54, 0.1);
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &:active {
+      transform: scale(0.95);
+      background: #f0f0f0;
+    }
+  }
+
+  &::-moz-range-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #4a4036;
+    cursor: pointer;
+    pointer-events: auto;
+    box-shadow: 0 2px 6px rgba(74, 64, 54, 0.1);
+    transition: transform 0.2s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+// Ensure the thumbs are visible and interactive even when overlapping
+.min-input {
+  z-index: 3;
+}
+
+.max-input {
+  z-index: 2;
+}

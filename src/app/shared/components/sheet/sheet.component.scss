@@ -1,0 +1,130 @@
+.sheet-backdrop {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(74, 64, 54, 0.5);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 2000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.sheet-container {
+  position: fixed;
+  background: #fff;
+  z-index: 3000;
+  box-shadow: 0 0 25px rgba(74, 64, 54, 0.1);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  .sheet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(74, 64, 54, 0.05);
+
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #4a4036;
+      margin: 0;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: rgba(74, 64, 54, 0.4);
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        background: rgba(74, 64, 54, 0.05);
+        color: #4a4036;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  .sheet-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+    scrollbar-width: thin;
+  }
+
+  .sheet-footer {
+    padding: 1.5rem;
+    border-top: 1px solid rgba(74, 64, 54, 0.05);
+    background: #faf8f5;
+  }
+
+  // Side Variations
+  &.side-left {
+    top: 0;
+    left: 0;
+    width: 300px;
+    height: 100vh;
+    transform: translateX(-100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  &.side-right {
+    top: 0;
+    right: 0;
+    width: 300px;
+    height: 100vh;
+    transform: translateX(100%);
+
+    &.open {
+      transform: translateX(0);
+    }
+  }
+
+  &.side-bottom {
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 40vh;
+    transform: translateY(100%);
+
+    &.open {
+      transform: translateY(0);
+    }
+  }
+
+  &.side-top {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 40vh;
+    transform: translateY(-100%);
+
+    &.open {
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

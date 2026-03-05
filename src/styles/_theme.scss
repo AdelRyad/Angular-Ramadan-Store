@@ -1,0 +1,54 @@
+// Minimalist Warm Light Theme (Quiet Beige Edition)
+$ramadan-primary: #faf6f0; // Very soft beige background
+$ramadan-primary-light: #ffffff; // White
+$ramadan-secondary: #4a4036; // Dark muted brown (replaces absolute black)
+$ramadan-accent: #4a4036; // Dark muted brown
+$ramadan-accent-light: #6b5e54; // Lighter warm dark brown (replaces #6b5e54)
+$ramadan-text-light: #4a4036; // Primary text color
+$ramadan-text-dark: #7c7166; // Secondary muted text details
+$ramadan-card-bg: #ffffff; // White cards
+$ramadan-card-border: rgba(74, 64, 54, 0.06);
+
+// Soft shadow tinted with warmth
+@mixin lantern-glow {
+  box-shadow: 0 4px 15px rgba(74, 64, 54, 0.04);
+}
+
+@mixin lantern-glow-active {
+  box-shadow: 0 10px 30px rgba(74, 64, 54, 0.08);
+}
+
+// Minimal Card
+@mixin card-style {
+  background: $ramadan-card-bg;
+  border-radius: 16px;
+  border: 1px solid $ramadan-card-border;
+  @include lantern-glow;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// Clean dark text
+@mixin gold-text {
+  color: $ramadan-text-light;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@mixin skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(74, 64, 54, 0.04) 25%,
+    rgba(74, 64, 54, 0.08) 50%,
+    rgba(74, 64, 54, 0.04) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 8px;
+}

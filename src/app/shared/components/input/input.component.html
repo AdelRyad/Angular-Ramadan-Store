@@ -1,0 +1,35 @@
+<div class="input-container" [class.has-icon]="icon()" [class.disabled]="disabled()">
+  <div class="input-wrapper">
+    @if (icon()) {
+      <div class="input-icon">
+        <ng-container [ngTemplateOutlet]="icon()"></ng-container>
+      </div>
+    }
+
+    @if (type() === 'textarea') {
+      <textarea
+        [id]="id()"
+        [name]="name()"
+        [placeholder]="placeholder()"
+        [disabled]="disabled()"
+        [value]="_value()"
+        (input)="onValueChange($any($event.target).value)"
+        (blur)="onTouched()"
+        [rows]="rows()"
+        class="base-input custom-textarea"
+      ></textarea>
+    } @else {
+      <input
+        [type]="type()"
+        [id]="id()"
+        [name]="name()"
+        [placeholder]="placeholder()"
+        [disabled]="disabled()"
+        [value]="_value()"
+        (input)="onValueChange($any($event.target).value)"
+        (blur)="onTouched()"
+        class="base-input"
+      />
+    }
+  </div>
+</div>

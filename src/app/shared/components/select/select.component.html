@@ -1,0 +1,59 @@
+<div class="select-container" #container [class.open]="isOpen()" [class]="customClass()">
+  <button
+    type="button"
+    #trigger
+    class="select-trigger"
+    (click)="toggleOpen()"
+    [class.placeholder]="!selectedOption()"
+    [disabled]="disabled()"
+  >
+    <span class="trigger-label">
+      {{ selectedOption() ? selectedOption()!.label : placeholder() }}
+    </span>
+    <svg
+      class="chevron"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <polyline points="6 9 12 15 18 9"></polyline>
+    </svg>
+  </button>
+
+  @if (isOpen()) {
+    <div
+      class="select-content"
+      #content
+      [class.open-upward]="openUpward()"
+      [style.maxHeight.px]="maxHeight()"
+    >
+      <div class="options-wrapper">
+        @for (option of normalizedOptions(); track $index) {
+          <div
+            class="option-item"
+            [class.selected]="_value() === option.value"
+            (click)="selectOption(option)"
+          >
+            <span>{{ option.label }}</span>
+            @if (_value() === option.value) {
+              <svg
+                class="check-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

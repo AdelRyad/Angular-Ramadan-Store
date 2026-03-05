@@ -1,0 +1,110 @@
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 4rem;
+  padding: 1.5rem 0;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+    gap: 1.5rem;
+  }
+
+  &.is-rtl,
+  [dir='rtl'] & {
+    .arrow-btn svg {
+      transform: scaleX(-1) !important;
+    }
+  }
+
+  .pagination-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .page-btn {
+      min-width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid rgba(74, 64, 54, 0.1);
+      border-radius: 12px;
+      font-weight: 600;
+      color: rgba(74, 64, 54, 0.7);
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover:not(:disabled) {
+        background: #faf8f5;
+        border-color: #4a4036;
+        color: #4a4036;
+      }
+
+      &.active {
+        background: #4a4036;
+        color: #fff;
+        border-color: #4a4036;
+      }
+
+      &:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
+
+      svg {
+        width: 20px;
+        height: 20px;
+        transition: transform 0.2s;
+      }
+    }
+
+    .ellipsis {
+      padding: 0 0.5rem;
+      color: rgba(74, 64, 54, 0.4);
+      font-weight: 600;
+    }
+  }
+
+  .pagination-info {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    width: auto;
+
+    .results-text {
+      color: #4a4036;
+      font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    ::ng-deep .pagination-select {
+      .select-trigger {
+        background: rgba(74, 64, 54, 0.05) !important;
+        border: none !important;
+        font-weight: 700 !important;
+        font-size: 1.1rem !important;
+        padding: 0.6rem 1rem !important;
+        border-radius: 12px !important;
+
+        &:hover {
+          background: rgba(74, 64, 54, 0.1) !important;
+        }
+
+        .chevron {
+          opacity: 1 !important;
+          color: #4a4036 !important;
+        }
+      }
+
+      .select-content {
+        min-width: 80px !important;
+      }
+    }
+  }
+}

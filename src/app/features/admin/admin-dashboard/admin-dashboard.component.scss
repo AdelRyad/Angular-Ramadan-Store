@@ -1,0 +1,241 @@
+@use '../../../../styles/theme' as *;
+
+.admin-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+  // Removed z-index: 10 to avoid creating a new stacking context that traps modals below the header
+  min-height: 80vh;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+
+    h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #4a4036;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+  }
+
+  .table-wrapper {
+    background: #ffffff;
+    overflow-x: auto;
+    color: #4a4036;
+    padding: 1.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(74, 64, 54, 0.05);
+    box-shadow: 0 10px 30px rgba(74, 64, 54, 0.02);
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+
+      th,
+      td {
+        padding: 1.25rem 1.5rem;
+        text-align: start;
+        border-bottom: 1px solid rgba(74, 64, 54, 0.05);
+      }
+
+      th {
+        color: rgba(74, 64, 54, 0.8);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 1px;
+        background: #faf6f0;
+
+        &:first-child {
+          border-start-start-radius: 12px;
+        }
+        &:last-child {
+          border-start-end-radius: 12px;
+        }
+      }
+
+      tr {
+        transition: background 0.3s ease;
+        &:hover td {
+          background: #faf8f5;
+        }
+        &:last-child td {
+          border-bottom: none;
+        }
+      }
+
+      .skeleton-box {
+        @include skeleton-shimmer;
+        background: rgba(74, 64, 54, 0.04);
+      }
+
+      .badge {
+        display: inline-block;
+        white-space: nowrap;
+        background: rgba(74, 64, 54, 0.05);
+        color: #4a4036;
+        border: 1px solid rgba(74, 64, 54, 0.1);
+        padding: 0.35rem 0.85rem;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.8rem;
+        align-items: center;
+      }
+
+      .admin-empty-state {
+        text-align: center;
+        padding: 5rem 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        animation: fadeIn 0.8s ease-out;
+
+        .empty-illustration {
+          width: 100px;
+          height: 100px;
+          background: #faf6f0;
+          border-radius: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: rgba(74, 64, 54, 0.2);
+          margin-bottom: 0.5rem;
+          border: 1px solid rgba(74, 64, 54, 0.05);
+
+          svg {
+            width: 48px;
+            height: 48px;
+          }
+        }
+
+        h3 {
+          font-size: 1.5rem;
+          font-weight: 800;
+          color: #3e352d;
+          margin: 0;
+        }
+
+        p {
+          color: rgba(74, 64, 54, 0.5);
+          font-size: 1rem;
+          margin: 0 0 1rem 0;
+          max-width: 300px;
+          line-height: 1.6;
+        }
+      }
+    }
+  }
+}
+
+// Form styles used inside ModalComponent
+::ng-deep {
+  .modal-content {
+    .form-group {
+      margin-bottom: 1.5rem;
+
+      label {
+        display: block;
+        margin-bottom: 0.6rem;
+        font-weight: 600;
+        color: rgba(74, 64, 54, 0.7);
+        font-size: 0.9rem;
+      }
+
+      input,
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.9rem 1.1rem;
+        background: #f9fafb !important;
+        border: 1px solid rgba(74, 64, 54, 0.08) !important;
+        border-radius: 14px !important;
+        color: #4a4036 !important;
+        font-size: 1rem;
+        font-family: inherit;
+        transition: all 0.2s ease;
+
+        &:focus {
+          outline: none;
+          background: #fff !important;
+          border-color: #4a4036 !important;
+          box-shadow: 0 0 0 4px rgba(74, 64, 54, 0.1);
+        }
+
+        &::placeholder {
+          color: rgba(74, 64, 54, 0.3);
+        }
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      width: 100%;
+    }
+
+    &.delete-modal {
+      .delete-icon {
+        width: 64px;
+        height: 64px;
+        background: #fef2f2;
+        color: #dc2626;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+
+        svg {
+          width: 32px;
+          height: 32px;
+        }
+      }
+
+      p {
+        color: $ramadan-text-dark;
+        opacity: 0.8;
+        line-height: 1.6;
+        margin-bottom: 2rem;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateSlow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
